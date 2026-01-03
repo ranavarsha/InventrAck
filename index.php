@@ -1,3 +1,2 @@
 <?php
-echo "Inventrack is running successfully!";
-?>
+echo "Inventrack is LIVE on Railway 🚀";
