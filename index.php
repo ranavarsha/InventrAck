@@ -1,3 +1,3 @@
 <?php
-header("Location: login.php");
-exit();
+echo "Inventrack is running successfully!";
+?>
