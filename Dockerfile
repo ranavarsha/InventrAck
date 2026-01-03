@@ -1,17 +1,18 @@
 FROM php:8.2-apache
 
-# Disable conflicting MPMs
-RUN a2dismod mpm_event mpm_worker || true
+# Enable Apache rewrite
+RUN a2enmod rewrite
 
-# Enable prefork (required for PHP)
-RUN a2enmod mpm_prefork rewrite
+# Remove conflicting MPMs (IMPORTANT FIX)
+RUN a2dismod mpm_event mpm_worker && a2enmod mpm_prefork
+
+# Set Apache DocumentRoot
+ENV APACHE_DOCUMENT_ROOT=/var/www/html
 
 # Copy project files
 COPY . /var/www/html/
 
-# Permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
+# Fix permissions
+RUN chown -R www-data:www-data /var/www/html
 
-# Expose port
 EXPOSE 80
